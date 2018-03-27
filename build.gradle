@@ -1,14 +1,36 @@
-group 'com.ceosilvajr.uuid'
-version '1.0-SNAPSHOT'
+/*
+ * Copyright (c) 2018. ceosilvajr All rights reserved
+ */
 
 apply plugin: 'java'
 
-sourceCompatibility = 1.8
-
 repositories {
-    mavenCentral()
+  jcenter()
+  mavenCentral()
+}
+
+ext {
+  testNg = '6.9.12'
+  mockito = '2.13.0'
+  javafaker = '0.14'
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+  testCompile group: 'org.testng', name: 'testng', version: "$rootProject.testNg"
+  testCompile group: 'org.mockito', name: 'mockito-core', version: "$rootProject.mockito"
+  testCompile group: 'com.github.javafaker', name: 'javafaker', version: "$rootProject.javafaker"
 }
+
+def skip_quality_check = project.hasProperty('check') && check == 'false'
+println("skip_quality_check: " + skip_quality_check)
+
+if (!skip_quality_check) {
+  apply from: "$rootDir/check/quality.gradle"
+}
+
+configurations.all {
+  resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
