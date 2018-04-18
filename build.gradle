@@ -16,9 +16,9 @@ ext {
 }
 
 dependencies {
-  testCompile group: 'org.testng', name: 'testng', version: "$rootProject.testNg"
-  testCompile group: 'org.mockito', name: 'mockito-core', version: "$rootProject.mockito"
-  testCompile group: 'com.github.javafaker', name: 'javafaker', version: "$rootProject.javafaker"
+  testCompileOnly group: 'org.testng', name: 'testng', version: "$rootProject.testNg"
+  testCompileOnly group: 'org.mockito', name: 'mockito-core', version: "$rootProject.mockito"
+  testCompileOnly group: 'com.github.javafaker', name: 'javafaker', version: "$rootProject.javafaker"
 }
 
 def skip_quality_check = project.hasProperty('check') && check == 'false'
