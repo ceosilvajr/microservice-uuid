@@ -7,7 +7,6 @@ package com.ceosilvajr.microserviceuuid;
 import com.ceosilvajr.microserviceuuid.exceptions.UniqueIdentifierException;
 import com.ceosilvajr.microserviceuuid.helpers.Paraphrase;
 import com.ceosilvajr.microserviceuuid.helpers.Suffix;
-import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.UUID;
@@ -44,7 +43,7 @@ public class UniqueIdentifier {
   public String generateUniqueId(final String suffix) {
     try {
       return generateFromKey(paraphrase, suffix);
-    } catch (final UnsupportedEncodingException | NoSuchAlgorithmException e) {
+    } catch (final NoSuchAlgorithmException e) {
       throw new UniqueIdentifierException(e);
     }
   }
@@ -52,7 +51,7 @@ public class UniqueIdentifier {
   public String generateUserUniqueId() {
     try {
       return generateFromKey(paraphrase, Suffix.USER.getValue());
-    } catch (final UnsupportedEncodingException | NoSuchAlgorithmException e) {
+    } catch (final NoSuchAlgorithmException e) {
       throw new UniqueIdentifierException(e);
     }
   }
@@ -60,7 +59,7 @@ public class UniqueIdentifier {
   public String generateAccountUniqueId() {
     try {
       return generateFromKey(paraphrase, Suffix.ACCOUNT.getValue());
-    } catch (final UnsupportedEncodingException | NoSuchAlgorithmException e) {
+    } catch (final NoSuchAlgorithmException e) {
       throw new UniqueIdentifierException(e);
     }
   }
@@ -68,13 +67,13 @@ public class UniqueIdentifier {
   public String generateTransactionUniqueId() {
     try {
       return generateFromKey(paraphrase, Suffix.TRANSACTION.getValue());
-    } catch (final UnsupportedEncodingException | NoSuchAlgorithmException e) {
+    } catch (final NoSuchAlgorithmException e) {
       throw new UniqueIdentifierException(e);
     }
   }
 
   private String generateFromKey(final String paraphrase, final String suffix)
-      throws UnsupportedEncodingException, NoSuchAlgorithmException {
+      throws NoSuchAlgorithmException {
     final String source = String.format("%s%s", paraphrase, System.currentTimeMillis());
     final SecureRandom secureRandom = SecureRandom.getInstanceStrong();
     final UUID uuid = UUID.nameUUIDFromBytes(secureRandom.generateSeed(source.length()));
